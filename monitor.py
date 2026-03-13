@@ -36,7 +36,7 @@ def monitor_market():
             print(f"Checked {ticker}: Current Price={round(ltp, 2)}, Target={target}")
             
             # 4. Logical Check for alert
-            if ltp >= target and not last_alert:
+            if ltp <= target and not last_alert:
                 print(f"🎯 Target hit for {ticker}! Sending Telegram alert...")
                 msg = f"🚀 *Stock Alert: {ticker}*\nPrice: {round(ltp, 2)}\nTarget: {target}"
                 send_alert(msg)

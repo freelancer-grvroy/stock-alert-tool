@@ -49,7 +49,9 @@ def monitor_market():
 def send_alert(msg):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     payload = {"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"}
-    requests.post(url, json=payload)
+    response = requests.post(url, json=payload)
+    # This will show us the REAL error in GitHub Actions logs
+    print(f"Telegram Response: {response.status_code} - {response.text}")
 
 if __name__ == "__main__":
     monitor_market()

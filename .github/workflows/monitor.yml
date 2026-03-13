@@ -22,7 +22,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install requests gspread google-auth
+          pip install requests gspread google-auth yfinance
 
       - name: Run monitoring script
         env:

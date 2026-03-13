@@ -1,1 +1,31 @@
+name: Stock Monitor
 
+on:
+  schedule:
+    # Runs every 5 minutes from 3:45 AM UTC to 10:00 AM UTC (9:15 AM to 3:30 PM IST)
+    # The cron '*/5 3-10 * * 1-5' covers the 3:00-10:59 UTC window on weekdays.
+    - cron: '*/5 3-10 * * 1-5'
+  workflow_dispatch: # This adds a "Run workflow" button in GitHub so you can test it manually.
+
+jobs:
+  check-stocks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install requests gspread google-auth
+
+      - name: Run monitoring script
+        env:
+          # This pulls your Google JSON key from GitHub Secrets
+          GSPREAD_JSON: ${{ secrets.GSPREAD_JSON }}
+        run: python monitor.py
